@@ -111,9 +111,6 @@ test.describe('Register', () => {
     await expect(registration.email).toHaveJSProperty('validity.valid', false);
     await expect(registration.password).toHaveJSProperty('validity.valid', false);
 
-    await expect(registration.privacyCheckbox).not.toBeChecked();
-    await expect(registration.termsCheckbox).not.toBeChecked();
-
     await expect(registration.privacyCheckbox).toHaveJSProperty('validity.valid', false);
     await expect(registration.termsCheckbox).toHaveJSProperty('validity.valid', false);
 

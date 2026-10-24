@@ -8,20 +8,20 @@ You need Node.js and npm.
 
     npm install
     npx playwright install
-    npx playwright test
+    npm test
 
 To open the report after the run:
 
-    npx playwright show-report
+    npm run report
 
-If you want to see the browser while the tests run, add '--headed'.
+If you want to see the browser while the tests run, use `npm run test:headed`.
 
 ## Project structure
 
-- 'pages/RegistrationPage.ts' has the locators and actions for the page
-- 'utils/testData.ts' creates a new unique user for every test
-- 'tests/register.spec.ts' has the test scenarios
-- 'playwright.config.ts' has the base URL and timeout
+- `pages/RegistrationPage.ts` has the locators and actions for the page
+- `utils/testData.ts` creates a new unique user for every test
+- `tests/register.spec.ts` has the test scenarios
+- `playwright.config.ts` has the base URL and timeout
 
 ## What I tested
 
@@ -40,22 +40,23 @@ I think the successful registration and the duplicate email are the most importa
 
 ## Problems I found while building it
 
-- The whole shop is inside an iframe ('#framelive'), so every locator goes through it.
+- The whole shop is inside an iframe (`#framelive`), so every locator goes through it.
 - Every time I open the demo, it creates a new shop with an empty database. Because of this, the duplicate email test registers, signs out and registers again in the same session. If I reloaded the page, the user would not exist anymore.
-- Some links, like 'Sign in', appear more than once on the page. I made the locators more specific to avoid strict mode errors.
-- The email and checkbox errors are shown by the browser, not by the page, so I could not find the message text in the page. I check the 'validity' of the field instead.
+- Some links, like "Sign in", appear more than once on the page. I made the locators more specific to avoid strict mode errors.
+- The email and checkbox errors are shown by the browser, not by the page, so I could not find the message text in the page. I check the `validity` of the field instead.
 - The demo is slow to start, so I increased the test timeout.
 
 ## What I did not cover
 
-- Optional fields (social title, birthdate, newsletter, partner offers)
+- Optional fields (social title, newsletter, partner offers)
+- Birthdate, I only tested it manually (see below)
 - Password strength, only the minimum length is tested
 - Special characters and maximum length in names
 - Other browsers, I only use Chromium to keep the tests stable
 
 ## What I would improve in a real project
 
-In a real project I would not use the public demo, because it is slow and can be unstable. I would ask for a clean test environment that starts fast. I would also ask the developers to add 'data-testid' attributes, so the locators do not depend on text and classes. To prepare the test data, I would create users through an API instead of the UI, so the tests are faster and more independent. Finally, I would run the tests in CI on every pull request and add Firefox and WebKit.
+In a real project I would not use the public demo, because it is slow and can be unstable. I would ask for a clean test environment that starts fast. I would also ask the developers to add `data-testid` attributes to the main elements, because some of my locators now depend on text, classes and aria-labels, which can change. To prepare the test data, I would create users through an API instead of the UI, so the tests are faster and more independent. Finally, I would run the tests in CI on every pull request and add Firefox and WebKit.
 
 ## Exploratory testing
 
