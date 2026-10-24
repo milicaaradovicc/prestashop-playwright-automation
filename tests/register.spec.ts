@@ -53,7 +53,7 @@ test.describe('Register', () => {
   test('rejects invalid email format', async () => {
     const user = createUniqueUser();
 
-    await registration.fillForm({... user, email: 'milicaradovic'});
+    await registration.fillForm({...user, email: 'milicaradovic'});
     await registration.acceptRequiredConsents();
     await registration.submit();
 
@@ -80,7 +80,7 @@ test.describe('Register', () => {
   test('rejects first name containing digits', async () => {
     const user = createUniqueUser();
 
-    await registration.fillForm({... user, firstName: 'Milica123'});
+    await registration.fillForm({...user, firstName: 'Milica123'});
     await registration.acceptRequiredConsents();
     await registration.submit();
 
@@ -93,7 +93,7 @@ test.describe('Register', () => {
   test('rejects password shorter than 8 characters', async () => {
     const user = createUniqueUser();
 
-    await registration.fillForm({... user, password: 'milica'});
+    await registration.fillForm({...user, password: 'milica'});
     await registration.acceptRequiredConsents();
     await registration.submit();
 
@@ -119,7 +119,6 @@ test.describe('Register', () => {
 
     await expect(registration.form).toBeVisible();
     await expect(registration.accountButton).toBeHidden();
-
   });
 
 });
