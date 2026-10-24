@@ -6,7 +6,7 @@ export function createUniqueUser(): RegistrationData {
   return {
     firstName: 'Milica',
     lastName: 'Radovic',
-    email: `milica.radovic+${unique}@gmail.com`,
+    email: `milica.radovic+${unique}@example.com`,
     password: 'Milicatest123!',
   };
 }

@@ -14,6 +14,7 @@ export class RegistrationPage {
   readonly signInLink: Locator;
   readonly createAccountLink: Locator;
   readonly accountButton: Locator;
+  readonly signOutLink: Locator;
 
   // form
   readonly form: Locator;
@@ -25,9 +26,9 @@ export class RegistrationPage {
   readonly termsCheckbox: Locator;
   readonly submitButton: Locator;
 
-  // result
-  readonly formError: Locator;
-  readonly signOutLink: Locator;
+  // errors
+  readonly emailAlreadyUsedError: Locator;
+  readonly invalidFormatError: Locator;
 
   constructor(private readonly page: Page) {
     this.shop = page.frameLocator('#framelive');
@@ -35,6 +36,7 @@ export class RegistrationPage {
     this.signInLink = this.shop.locator('a.header-block__action-btn[aria-label="Sign in"]');
     this.createAccountLink = this.shop.locator('a[data-link-action="display-register-form"]');
     this.accountButton = this.shop.locator('#userMenuButton');
+    this.signOutLink = this.shop.locator('a.dropdown-item[href*="mylogout"]');
 
     this.form = this.shop.locator('#customer-form');
     this.firstName = this.form.locator('input[name="firstname"]');
@@ -45,13 +47,18 @@ export class RegistrationPage {
     this.termsCheckbox = this.form.locator('input[name="psgdpr"]');
     this.submitButton = this.form.getByRole('button', { name: 'Create account', exact: true });
 
-    this.formError = this.shop.locator('.alert-danger, .help-block');
-    this.signOutLink = this.shop.getByRole('link', { name: /sign out/i });
+    this.emailAlreadyUsedError = this.shop.getByText(/already used/i);
+    this.invalidFormatError = this.form.getByRole('alert').filter({ hasText: 'Invalid format' });
   }
 
   async open() {
     await this.page.goto('/');
     await this.signInLink.click({ timeout: 60_000 });
+    await this.createAccountLink.click();
+  }
+
+  async goToRegistration() {
+    await this.signInLink.click();
     await this.createAccountLink.click();
   }
 
@@ -75,5 +82,10 @@ export class RegistrationPage {
     await this.fillForm(data);
     await this.acceptRequiredConsents();
     await this.submit();
+  }
+
+  async signOut() {
+    await this.accountButton.click();
+    await this.signOutLink.click();
   }
 }
