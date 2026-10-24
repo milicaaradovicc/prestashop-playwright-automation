@@ -56,3 +56,7 @@ I think the successful registration and the duplicate email are the most importa
 ## What I would improve in a real project
 
 In a real project I would not use the public demo, because it is slow and can be unstable. I would ask for a clean test environment that starts fast. I would also ask the developers to add 'data-testid' attributes, so the locators do not depend on text and classes. To prepare the test data, I would create users through an API instead of the UI, so the tests are faster and more independent. Finally, I would run the tests in CI on every pull request and add Firefox and WebKit.
+
+## Exploratory testing
+
+I found three issues while exploring the demo. They are in [BUG_REPORTS.md](BUG_REPORTS.md).
